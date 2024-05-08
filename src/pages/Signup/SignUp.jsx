@@ -8,7 +8,6 @@ const SignUp = () => {
 
     const {creatUser} = useContext(AuthContext)
 
-    
     const handleSignUp = e => {
         e.preventDefault();
         const form = e.target;
