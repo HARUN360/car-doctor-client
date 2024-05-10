@@ -27,12 +27,20 @@ const AuthProvider = ({children}) => {
 
     useEffect( () => {
        const unsubscribe = onAuthStateChanged(auth, currentUser => {
+        const userEmail = currentUser?.email || user?.email;
+        const loggedUser = {email: userEmail}
             setUser(currentUser);
             console.log('currentUser', currentUser);
             setLoading(false);
             if(currentUser){
-                const loggedUser = {email: currentUser.email}
-                axios.post('http://localhost:5000/',loggedUser, {withCredential: true})
+                
+                axios.post('https://car-doctor-server-gamma-teal.vercel.app/jwt',loggedUser, {withCredentials: true})
+                .then(res => {
+                    console.log('token', res.data);
+                })
+            }
+            else{
+                axios.post('https://car-doctor-server-gamma-teal.vercel.app/logout',loggedUser, {withCredentials: true})
                 .then(res => {
                     console.log('token', res.data);
                 })
